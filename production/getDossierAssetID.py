@@ -11,9 +11,6 @@ def getKeyValues(dictionaries, primaryAssetIdentifier):
             asset_id = d["physicalMeter"]["meterAssociation"]["assetId"]
             
             return (meterAssociationId, asset_id)
-        else:
-            print(d)
-    print("could not find the asset ID in doss")
     return False, False
 
 def createPerams(omniAssetID):

@@ -9,6 +9,10 @@ import getDossierAssetID
 import changeMeter
 
 import logging
+import itertools
+import sys
+
+spinners = itertools.cycle(['-', '\\', '|', '/'])  
 
 def getRequiredData(access_token, key):
     try:
@@ -47,24 +51,33 @@ if __name__ == '__main__':
     #1. It sends a completly empty transactionblock, This will force transactions to be false and that way we can break out of the loop because there is no data to add to our dic
     #2. Each transaction block sends 500 transactions if there are less we are finished. In this case then transactions are there the last transaction = 
     while True:
-
-        print("fetching Response")
+        sys.stdout.write('Fetching Response ')
+        sys.stdout.flush()
         response = soapClient.createRequest(omniUsername, omniPassword, lastTran)
-        transaction_id = lastTran
+        sys.stdout.write('\b' * 16)  
+        print('Done!')
 
-        print("parsing Response")
+        sys.stdout.write('Parsing Response ') 
+        sys.stdout.flush()
+        transaction_id = lastTran 
         transactions, lastTran = soapParse.parseXML(response.text)
+        sys.stdout.write('\b' * 16)
+        print('Done!')
+
         if transactions == False:
             break
 
-        print("Creating Data... \n")
-        equipment_data = soapParse.createData(equipment_data, transactions)
+        sys.stdout.write('Creating Data ')
+        sys.stdout.flush()
+        for _ in range(5):
+            sys.stdout.write(next(spinners))
+            sys.stdout.flush() 
+            print("\b", end="", flush=True)
+        equipment_data = soapParse.createData(equipment_data, transactions) 
+        print('Done!')
+
         if lastTran == False:
             break
-
-    with open("output.txt", "w") as file:
-        file.write(str(equipment_data))
-        file.close()
         
         ## Doss Side ##
 

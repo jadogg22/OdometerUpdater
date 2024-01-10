@@ -36,7 +36,6 @@ def extract_odometer_driver_data(decoded_content):
 
             #this is an edge case for owner operated equipment
             if driver_id[-1] == "1":
-                print("found owner op")
                 continue
             
             #create the dictionary to add.
@@ -49,12 +48,10 @@ def extract_odometer_driver_data(decoded_content):
                 "equipment_id": equipment_id
             }
         except Exception as e:
-            print(f"Error in {tran_id}:")
+            continue
    
 
-    # Print the result dictionary
-    #print(result_dict) 
-    print(f"the count is: {count}")
+# checks for a low amount of transactions 
     if count <= 490:
         tran_id = False
 
