@@ -51,18 +51,16 @@ if __name__ == '__main__':
     #1. It sends a completly empty transactionblock, This will force transactions to be false and that way we can break out of the loop because there is no data to add to our dic
     #2. Each transaction block sends 500 transactions if there are less we are finished. In this case then transactions are there the last transaction = 
     while True:
-        sys.stdout.write('Fetching Response ')
+        sys.stdout.write('Fetching Batch request ')
         sys.stdout.flush()
         response = soapClient.createRequest(omniUsername, omniPassword, lastTran)
         sys.stdout.write('\b' * 16)  
-        print('Done!')
 
         sys.stdout.write('Parsing Response ') 
         sys.stdout.flush()
         transaction_id = lastTran 
         transactions, lastTran = soapParse.parseXML(response.text)
         sys.stdout.write('\b' * 16)
-        print('Done!')
 
         if transactions == False:
             break
@@ -74,12 +72,11 @@ if __name__ == '__main__':
             sys.stdout.flush() 
             print("\b", end="", flush=True)
         equipment_data = soapParse.createData(equipment_data, transactions) 
-        print('Done!')
 
         if lastTran == False:
             break
         
-        ## Doss Side ##
+####### Doss Side #######
 
     access_token = dossAuthentication.getAccessToken()
         
@@ -87,8 +84,6 @@ if __name__ == '__main__':
 
     for key in equipment_data:
         print(f"Truck ID:{key}")
-
-        print(equipment_data[key])
 
         response = getRequiredData(access_token=access_token, key=key)
         if response:
