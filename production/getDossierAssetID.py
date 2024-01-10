@@ -3,6 +3,9 @@ import json
 import base64
 import os
 
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 
 def getKeyValues(dictionaries, primaryAssetIdentifier):
     for d in dictionaries:

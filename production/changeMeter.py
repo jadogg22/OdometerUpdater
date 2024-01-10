@@ -3,6 +3,8 @@ import base64
 import json
 
 import dossAuthentication
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def createOperation(meterAssociationId, odometer, date, lat, lon):
     meterAssociationId = int(meterAssociationId)
