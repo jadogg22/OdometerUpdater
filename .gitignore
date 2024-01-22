@@ -4,3 +4,4 @@ production/infoDossier/
 production/soapStuff/
 
 *.log
+production/ownerOperated.py
