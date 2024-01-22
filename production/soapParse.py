@@ -2,6 +2,7 @@ import xml.etree.ElementTree as ET
 import re
 import base64
 import datetime
+import ownerOperated
 
 def decode_base64(encoded_content):
     try:
@@ -35,7 +36,7 @@ def extract_odometer_driver_data(decoded_content):
             driver_id = tran_elem.find(".//driverID").text
 
             #this is an edge case for owner operated equipment
-            if driver_id[-1] == "1":
+            if ownerOperated.isOwnerOperated(driver_id):
                 continue
             
             #create the dictionary to add.
